@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: consul-checker
+spec:
+  serviceName: consul-checker
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  selector:
+    matchLabels:
+      app: consul-checker
+  template:
+    metadata:
+      labels:
+        app: "consul-checker"
+    spec:
+      securityContext:
+        fsGroup: 1000 # consul-checker group (1000) read/write access to volumes.
+      containers:
+        - name: consul-checker
+          imagePullPolicy: Always
+          image: clubdevops/consul-upstream-checker:latest # 1. Replace <VERSION> with the most recent release.
+          env:
+            - name: CONSUL
+              value: consul-agent:8500
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi
+              cpu: 100m
+

@@ -20,8 +20,7 @@ func main() {
 	mw := io.MultiWriter(os.Stdout, logFile)
 	log.SetOutput(mw)
 	consulAddress := os.Getenv("CONSUL")
-	dcName := os.Getenv("DC")
-	log.Printf("Will be working with %s %s",consulAddress,dcName)
+	log.Printf("Will be working with %s agent",consulAddress)
 	client, err := api.NewClient(&api.Config{Address: consulAddress})
 	if err != nil {
 		panic(err)
