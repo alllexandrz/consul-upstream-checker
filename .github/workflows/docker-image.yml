@@ -55,7 +55,7 @@ jobs:
 
       - name: Push image to DockerHub Container Registry
         run: |
-          IMAGE_ID=${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=$IMAGE_NAME
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           # Strip git ref prefix from version
